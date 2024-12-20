@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies and Reviews</title>
+</head>
+<body>
+<h1>Movies</h1>
+<ul id="movies"></ul>
+
+<h1>Reviews</h1>
+<ul id="reviews"></ul>
+
+<script>
+    // Fetch and display movies
+    fetch('/api/movies')
+        .then(response => response.json())
+        .then(data => {
+            const movieList = document.getElementById('movies');
+            data.forEach(movie => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${movie.title} (${movie.genre}) - Rating: ${movie.rating}`;
+                movieList.appendChild(listItem);
+            });
+        });
+
+    // Fetch and display reviews
+    fetch('/api/reviews')
+        .then(response => response.json())
+        .then(data => {
+            const reviewList = document.getElementById('reviews');
+            data.forEach(review => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `Review for "${review.movie.title}": "${review.comment}" - Rating: ${review.rating}`;
+                reviewList.appendChild(listItem);
+            });
+        });
+</script>
+</body>
+</html>
